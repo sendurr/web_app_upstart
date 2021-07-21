@@ -1,0 +1,1 @@
+global.app_dir = process.cwd();
