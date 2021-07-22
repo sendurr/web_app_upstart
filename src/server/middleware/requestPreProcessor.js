@@ -9,9 +9,9 @@ const preProcessor = (app) => {
     //support encoded bodies
     app.use(bodyParser.urlencoded({ extended: true}));
     // Sanitize request data for XSS
-    app.use(expressSanitized());
+    app.use(expressSanitized.middleware());
 
-    return (next) => {
+    return (req, res, next) => {
         next();
     };
 

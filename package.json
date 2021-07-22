@@ -5,7 +5,7 @@
   "main": "src/server/app.js",
   "scripts": {
     "babel-node": "node_modules/.bin/babel-node",
-    "start": " babel-node src/server/app.js"
+    "start:dev": " cross-env NODE_ENV=dev babel-node src/server/app.js"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
@@ -15,13 +15,15 @@
     "express": "~4.16.1",
     "express-sanitize-escape": "^1.1.0",
     "helmet": "^4.6.0",
-    "morgan": "~1.9.1"
+    "morgan": "~1.9.1",
+    "nocache": "^3.0.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.14.8",
     "@babel/core": "^7.14.8",
     "@babel/node": "^7.14.7",
     "@babel/preset-env": "^7.14.8",
+    "cross-env": "^7.0.3",
     "nodemon": "^2.0.12"
   }
 }

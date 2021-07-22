@@ -1,12 +1,12 @@
 export default function requestContextBuilder(req, res, next){
 
     if (req.path.startsWith("/")) {
-        global.logger.info("skipped requestContextBuilder");
+        global.logger.info(`skipped requestContextBuilder for req ${req.path}`);
         return next();
     }
     const requestContext = {
-      language: "en",
-      country: "US",
+        language: "en",
+        country: "US",
         userIp: req.headers["x-forwarded-for"] || req.connection.remoteAddress || req.socket.remoteAddress || null
     };
     req.requestContext = requestContext;

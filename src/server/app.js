@@ -1,38 +1,32 @@
 import express from "express";
+import http from "http";
 import path from "path";
 import cookieParser from "cookie-parser";
 import fs from "fs";
-import logger from "morgan";
 import config from "config";
 import helmet from "helmet";
+import noCache from "nocache";
 
 import "./global"
 import preProcessor from "./middleware/requestPreProcessor";
 import requestContextBuilder from "./middleware/requestContextBuilder";
+import platformApiRoutes from "./apis/platformApiRoutes";
 
 const app = express();
-const APPPORT = "3000";
+const APPPORT = process.env.PORT || "3000";
 
 // Need to add logger
 // global.logger = logger
 
-var indexRouter = require('../../routes/index');
-var usersRouter = require('../../routes/users');
-
-
-
 app.use(helmet());
-app.use(helmet.noCache);
+app.use(noCache());
 app.use(preProcessor(app));
 app.use(requestContextBuilder);
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use('/', platformApiRoutes);
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
 
-module.exports = app;
+http.createServer(app)
+    .listen(APPPORT, () => {
+        global.logger.info(`App server listening on port ${APPPORT}`);
+});
