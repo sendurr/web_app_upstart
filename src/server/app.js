@@ -11,6 +11,7 @@ import "./global"
 import preProcessor from "./middleware/requestPreProcessor";
 import requestContextBuilder from "./middleware/requestContextBuilder";
 import platformApiRoutes from "./apis/platformApiRoutes";
+import db from "./models";
 
 const app = express();
 const APPPORT = process.env.PORT || "3000";
@@ -25,8 +26,15 @@ app.use(requestContextBuilder);
 
 app.use('/', platformApiRoutes);
 
+// Connect to database
+db.sequelize.sync()
+    .then(() => {
+            global.logger.info("Database connection successful ");
+            http.createServer(app)
+                .listen(APPPORT, () => {
+                        global.logger.info(`App server listening on port ${APPPORT}`);
+                });
+    })
+    .catch((err) => global.logger.error(`Error connecting to database ${err}`));
 
-http.createServer(app)
-    .listen(APPPORT, () => {
-        global.logger.info(`App server listening on port ${APPPORT}`);
-});
+

@@ -1,3 +1,9 @@
 {
-  "db": "sfsdsd"
+  "pgDb": {
+    "username": "dolmxnoj",
+    "password": "os_cOI53FDYUDQnXRZOV-dP6ULaXuD-G",
+    "database": "dolmxnoj",
+    "host": "kashin.db.elephantsql.com",
+    "dialect": "postgres"
+  }
 }
