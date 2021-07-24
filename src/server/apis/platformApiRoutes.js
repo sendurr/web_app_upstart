@@ -1,5 +1,6 @@
 import express from "express";
 import tutorialController from "../controllers/tutorialController";
+import authorController from "../controllers/authorController";
 
 const router = express.Router();
 
@@ -22,12 +23,14 @@ router.get("/apis/users", (req, res) => {
     res.status(200).json(sampleUsers);
 });
 
-router.post("/apis/tutorials", (reg, res) => {
+router.post("/apis/tutorials", (req, res) => {
     global.logger.info("Processing /apis/tutorials");
+    // Create validator
     const tutorial = {
-        title: "One",
-        description: "First book",
-        published: true
+        title: req.body.title,
+        description: req.body.description,
+        published: true,
+        author_id: req.body.authorId
     };
     tutorialController.create(tutorial)
         .then((data) => {
@@ -39,7 +42,7 @@ router.post("/apis/tutorials", (reg, res) => {
         });
 });
 
-router.get("/apis/tutorials", (reg, res) => {
+router.get("/apis/tutorials", (req, res) => {
     global.logger.info("Processing get /apis/tutorials");
     tutorialController.findAll()
         .then((data) => {
@@ -48,6 +51,36 @@ router.get("/apis/tutorials", (reg, res) => {
         })
         .catch(() => {
             res.status(500).json({ error: "Error finding tutorial"});
+        });
+});
+
+router.post("/apis/authors", (req, res) => {
+    global.logger.info("Processing post /apis/authors");
+    // Create validator
+    const author = {
+        name: req.body.name
+    };
+    authorController.create(author)
+        .then((data) => {
+            global.logger.info("Successfully created author");
+            res.status(200).json(`created author ${data}`);
+        })
+        .catch((err) => {
+            global.logger.info(`Error creating author ${err}`);
+            res.status(500).json({ error: "Error creating author"});
+        });
+});
+
+router.get("/apis/authors", (req, res) => {
+    global.logger.info("Processing get /apis/authors");
+    authorController.findAll()
+        .then((data) => {
+            global.logger.info("Successfully found authors");
+            res.status(200).json(data);
+        })
+        .catch((err) => {
+            global.logger.info(`Error finding author ${err}`);
+            res.status(500).json({ error: "Error finding authors"});
         });
 });
 

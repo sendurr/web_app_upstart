@@ -27,7 +27,7 @@ app.use(requestContextBuilder);
 app.use('/', platformApiRoutes);
 
 // Connect to database
-db.sequelize.sync()
+db.sequelize.sync({force: true})
     .then(() => {
             global.logger.info("Database connection successful ");
             http.createServer(app)
