@@ -2,7 +2,7 @@ import db from "../models";
 
 const create = (data) => {
     return new Promise((resolve, reject) => {
-        db.tutorials.create(data)
+        db.tutorial.create(data)
             .then((res) => resolve(res))
             .catch((err) => reject(err));
     });
@@ -10,7 +10,7 @@ const create = (data) => {
 
 const findAll = (data) => {
     return new Promise((resolve, reject) => {
-        db.tutorials.findAll()
+        db.tutorial.findAll()
             .then((res) => resolve(res))
             .catch((err) => reject(err));
     });

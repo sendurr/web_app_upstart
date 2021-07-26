@@ -30,7 +30,7 @@ router.post("/apis/tutorials", (req, res) => {
         title: req.body.title,
         description: req.body.description,
         published: true,
-        author_id: req.body.authorId
+        authorId: req.body.authorId
     };
     tutorialController.create(tutorial)
         .then((data) => {

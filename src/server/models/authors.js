@@ -5,12 +5,5 @@ module.exports = (sequelize, Sequelize) => {
         }
     });
 
-    Author.associate = function(models) {
-        Author.hasMany(models.tutorials, {
-            foreignKey: 'author_id',
-            as: 'authorId'
-        });
-    };
-
     return Author;
 };
